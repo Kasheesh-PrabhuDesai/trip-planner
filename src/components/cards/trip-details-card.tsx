@@ -7,6 +7,15 @@ import {
   CardContent,
 } from "@material-ui/core";
 
+interface TripDetailsProps {
+  trips: {
+    legs: Array<any>;
+    price: object;
+    refreshToken: string;
+    type: string;
+  };
+}
+
 const useStyles = makeStyles(theme =>
   createStyles({
     tripDetailsCard: {
@@ -19,7 +28,7 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-const getCardHeader = legs => {
+const getCardHeader = (legs: Array<any>) => {
   let cardHeader = "";
   for (var i = 0; i < legs.length; i++) {
     cardHeader += legs[i]?.origin?.name + " - ";
@@ -28,7 +37,7 @@ const getCardHeader = legs => {
   return cardHeader;
 };
 
-const getTrainDetails = legs => {
+const getTrainDetails = (legs: Array<any>) => {
   let trains = "";
   for (var i = 0; i < legs.length; i++) {
     trains += legs[i]?.line?.name + " - ";
@@ -37,10 +46,10 @@ const getTrainDetails = legs => {
   return trains;
 };
 
-export default function TripDetailsCard({ trips }) {
+export default function TripDetailsCard({ trips }: TripDetailsProps) {
   const { legs, price } = trips;
   const transfers = legs.length;
-  console.log(legs);
+  console.log(trips);
   const classes = useStyles();
   return (
     <Card className={classes.tripDetailsCard}>
