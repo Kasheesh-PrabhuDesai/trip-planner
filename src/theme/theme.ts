@@ -397,7 +397,7 @@ const theme = createTheme({
     },
     MuiCardHeader: {
       root: {
-        padding: "1.25rem 1.5rem",
+        padding: "0.55rem 1.5rem",
         marginBottom: "0",
         backgroundColor: themeColors.white.main,
         borderBottom:
@@ -411,7 +411,7 @@ const theme = createTheme({
       root: {
         flex: "1 1 auto",
         minHeight: "1px",
-        padding: "1.5rem",
+        paddingLeft: "1.5rem",
       },
     },
     MuiCardActions: {
