@@ -70,7 +70,9 @@ const getTicketPrice = (price: {
   hint: any;
   currency: string;
 }) => {
-  return `${price?.amount} ${price?.currency}`;
+  return `${price?.amount ?? "no price details available"} ${
+    price?.currency ?? ""
+  }`;
 };
 
 export default function TripDetailsCard({ trips }: TripDetailsProps) {
