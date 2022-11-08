@@ -1,14 +1,10 @@
 import {
-  TextField,
   Grid,
   Button,
   makeStyles,
   createStyles,
   Typography,
-  Card,
-  CardContent,
   CircularProgress,
-  Box,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import SearchCard from "../../src/components/cards/search-inputs-card";
@@ -20,6 +16,11 @@ export default function PlanTripPage() {
 
   return (
     <>
+      <Grid container item justifyContent="center">
+        <Typography variant={"h1"} component={"h1"}>
+          Easy Trip Planner
+        </Typography>
+      </Grid>
       <Grid container justifyContent="center" item>
         <SearchCard
           setTrips={setTrips}
