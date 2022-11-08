@@ -52,7 +52,7 @@ export default function SearchCard({
       const { data } = await axios.get(
         `https://v5.db.transport.rest/journeys?from=${origin}&to=${destination}&departure=${
           date + "T" + time
-        }&bus=false&tickets=true&results=5`
+        }&tickets=true&results=5`
       );
       if (data) {
         const journeys = data.journeys;

@@ -7,16 +7,10 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
-import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import TrainIcon from "@material-ui/icons/Train";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import {
-  displayDateTime,
-  getPlatformDetails,
-  getTrainNameDetails,
-} from "../../helpers/trip-details-extractor";
+import { displayDateTime } from "../../helpers/trip-details-extractor";
 
 interface TravelTimelineProps {
   legs: Array<any>;
@@ -37,12 +31,19 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
     <Timeline align="alternate">
       {legs.map((item, index) => (
         <>
-          <TimelineItem key={index}>
+          <TimelineItem key={item.tripId}>
             <TimelineOppositeContent>
-              <Typography variant={"h3"} color="textSecondary">
-                {displayDateTime(item.departure, "time")} via{" "}
-                {item?.line?.name ?? "TBD"}
-              </Typography>
+              {item?.line?.name && (
+                <Typography variant={"h3"} color="textSecondary">
+                  {displayDateTime(item.departure, "time")} via{" "}
+                  {item.line.name ?? "TBD"}
+                </Typography>
+              )}
+              {item?.walking && (
+                <Typography variant={"h3"} color="textSecondary">
+                  {displayDateTime(item.departure, "time")} via walking
+                </Typography>
+              )}
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot>
@@ -52,10 +53,23 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
             </TimelineSeparator>
             <TimelineContent>
               <Paper elevation={5} className={classes.paper}>
-                <Typography>
-                  Board the train at {item?.origin?.name} platform{" "}
-                  {item?.departurePlatform ?? "TBD"}
-                </Typography>
+                {item?.line?.mode === "train" && (
+                  <Typography>
+                    Board the {item?.line?.mode} at {item?.origin?.name}{" "}
+                    platform {item?.departurePlatform ?? "TBD"}
+                  </Typography>
+                )}
+                {item?.line?.mode === "bus" && (
+                  <Typography>
+                    Board the {item?.line?.mode} at {item?.origin?.name}{" "}
+                  </Typography>
+                )}
+                {item?.walking && (
+                  <Typography>
+                    Walk until {item?.destination?.name} for roughly about{" "}
+                    {item?.distance} meters
+                  </Typography>
+                )}
               </Paper>
             </TimelineContent>
           </TimelineItem>
@@ -73,10 +87,15 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
             </TimelineSeparator>
             <TimelineContent>
               <Paper elevation={5} className={classes.paper}>
-                <Typography>
-                  Arrival at {item?.destination?.name} platform{" "}
-                  {item?.arrivalPlatform ?? "TBD"}
-                </Typography>
+                {item?.line?.mode === "train" && (
+                  <Typography>
+                    Arrival at {item?.destination?.name} platform{" "}
+                    {item?.arrivalPlatform ?? "TBD"}
+                  </Typography>
+                )}
+                {item?.line?.mode !== "train" && (
+                  <Typography>Arrival at {item?.destination?.name}</Typography>
+                )}
               </Paper>
             </TimelineContent>
           </TimelineItem>
