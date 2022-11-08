@@ -47,10 +47,10 @@ export const getTicketPrice = (price: {
 
 export const displayDateTime = (inputDate: string, mode: string) => {
   if (mode === "date") {
-    return moment(new Date(inputDate)).format("D/M/Y");
+    return moment.utc(new Date(inputDate)).format("D/M/Y");
   }
   if (mode === "time") {
-    return moment(new Date(inputDate)).format("hh:mm a");
+    return moment.utc(new Date(inputDate)).format("hh:mm a");
   }
 };
 

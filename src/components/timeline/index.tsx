@@ -11,7 +11,6 @@ import TrainIcon from "@material-ui/icons/Train";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { displayDateTime } from "../../helpers/trip-details-extractor";
-import moment from "moment";
 
 interface TravelTimelineProps {
   legs: Array<any>;
@@ -28,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function TravelTimeline({ legs }: TravelTimelineProps) {
   const classes = useStyles();
+  console.log(legs);
   return (
     <Timeline align="alternate">
       {legs.map((item, index) => (

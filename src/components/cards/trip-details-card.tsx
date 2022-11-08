@@ -60,7 +60,8 @@ export default function TripDetailsCard({ trips }: TripDetailsProps) {
               Departure Date: {displayDateTime(legs[0].departure, "date")}
             </Typography>
             <Typography variant={"h5"} component={"h5"}>
-              Arrival Date : {displayDateTime(legs[0].arrival, "date")}
+              Arrival Date :{" "}
+              {displayDateTime(legs[legs.length - 1].arrival, "date")}
             </Typography>
             <Typography variant={"h5"} component={"h5"}>
               Departure Time: {displayDateTime(legs[0].departure, "time")}
