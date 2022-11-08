@@ -11,6 +11,7 @@ import TrainIcon from "@material-ui/icons/Train";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { displayDateTime } from "../../helpers/trip-details-extractor";
+import moment from "moment";
 
 interface TravelTimelineProps {
   legs: Array<any>;
@@ -65,10 +66,7 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
                   </Typography>
                 )}
                 {item?.walking && (
-                  <Typography>
-                    Walk until {item?.destination?.name} for roughly about{" "}
-                    {item?.distance} meters
-                  </Typography>
+                  <Typography>Walk until {item?.destination?.name}</Typography>
                 )}
               </Paper>
             </TimelineContent>
