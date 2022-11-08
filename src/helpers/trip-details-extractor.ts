@@ -21,18 +21,9 @@ export const getTrainNameDetails = (legs: Array<any>) => {
 export const getTravelDuration = (legs: Array<any>) => {
   const departureTime = moment.utc(new Date(legs[0]?.departure));
   const arrivalTime = moment.utc(new Date(legs[legs.length - 1]?.arrival));
-  if (departureTime.isBefore(arrivalTime)) arrivalTime.add(1, "day");
+  if (arrivalTime.isBefore(departureTime)) departureTime.add(1, "day");
   var d = moment.duration(arrivalTime.diff(departureTime));
-  const hours = moment
-    .utc(+d)
-    .format("hh:mm")
-    .split(":")[0];
-  const minutes = moment
-    .utc(+d)
-    .format("hh:mm")
-    .split(":")[1];
-
-  return `${hours} hours , ${minutes} minutes`;
+  return `${d.get("hours")} hours, ${d.get("minutes")} minutes`;
 };
 
 export const getTicketPrice = (price: {
@@ -47,10 +38,10 @@ export const getTicketPrice = (price: {
 
 export const displayDateTime = (inputDate: string, mode: string) => {
   if (mode === "date") {
-    return moment.utc(new Date(inputDate)).format("D/M/Y");
+    return moment(new Date(inputDate)).format("D/M/Y");
   }
   if (mode === "time") {
-    return moment.utc(new Date(inputDate)).format("hh:mm a");
+    return moment(new Date(inputDate)).format("hh:mm a");
   }
 };
 
