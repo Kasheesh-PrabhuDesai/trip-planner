@@ -21,7 +21,7 @@ export const getTrainNameDetails = (legs: Array<any>) => {
 export const getTravelDuration = (legs: Array<any>) => {
   const departureTime = moment.utc(new Date(legs[0]?.departure));
   const arrivalTime = moment.utc(new Date(legs[legs.length - 1]?.arrival));
-  if (arrivalTime.isBefore(departureTime)) arrivalTime.add(1, "day");
+  if (departureTime.isBefore(arrivalTime)) arrivalTime.add(1, "day");
   var d = moment.duration(arrivalTime.diff(departureTime));
   const hours = moment
     .utc(+d)
