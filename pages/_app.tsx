@@ -4,6 +4,7 @@ import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { easyTripPlannerTheme } from "../src/theme";
 import Head from "next/head";
 import { AppProps } from "next/app";
+import { SnackbarProvider } from "notistack";
 
 function EasyTripApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -20,7 +21,11 @@ function EasyTripApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <CssBaseline />
-      <Component {...pageProps} />
+      <SnackbarProvider
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Component {...pageProps} />
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
