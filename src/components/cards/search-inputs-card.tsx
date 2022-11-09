@@ -12,6 +12,8 @@ import { useState } from "react";
 import SearchDestination from "../inputs/destination-input";
 import SearchOrigin from "../inputs/origin-input";
 import { useSnackbar } from "notistack";
+import getTripDetails from "../../../pages/api/get-trips";
+import tripsServices from "../../services/get-trips-service";
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -44,7 +46,7 @@ export default function SearchCard({
   setGetTrips,
   getTrips,
 }: SearchCardProps) {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const [origin, setOrigin] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -52,19 +54,20 @@ export default function SearchCard({
   const handleGetTrips = async () => {
     if (origin !== "" && destination !== "" && date !== "" && time != "") {
       setGetTrips(true);
-      let response;
       try {
-        response = await axios.get(
-          `https://v5.db.transport.rest/journeys?from=${origin}&to=${destination}&departure=${
-            date + "T" + time
-          }&tickets=true&results=5`
-        );
+        const response = await tripsServices.getTrips({
+          origin,
+          destination,
+          date,
+          time,
+        });
         const journeys = response.data.journeys;
         setTrips(journeys);
         setGetTrips(false);
       } catch (err: any) {
+        console.log(err);
         if (err?.response?.data?.error) {
-          const errorMsg = err?.response?.data?.message;
+          const errorMsg = err?.response?.data?.error?.message;
           enqueueSnackbar(errorMsg ?? "An error occurred. Please try again", {
             variant: "error",
           });

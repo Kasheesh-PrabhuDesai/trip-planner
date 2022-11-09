@@ -6,7 +6,6 @@ import TripDetailsCard from "../../src/components/cards/trip-details-card";
 export default function PlanTripPage() {
   const [trips, setTrips] = useState([]);
   const [getTrips, setGetTrips] = useState<boolean>(false);
-
   return (
     <>
       <Grid container item justifyContent="center">
@@ -31,9 +30,9 @@ export default function PlanTripPage() {
       )}
 
       {!getTrips &&
-        trips.map((trips, index) => (
+        trips.map((trip, index) => (
           <Grid container item justifyContent="center">
-            <TripDetailsCard trips={trips} key={index} />
+            <TripDetailsCard trips={trip} key={index} />
           </Grid>
         ))}
     </>
