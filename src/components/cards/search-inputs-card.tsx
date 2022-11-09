@@ -11,6 +11,7 @@ import axios from "axios";
 import { useState } from "react";
 import SearchDestination from "../inputs/destination-input";
 import SearchOrigin from "../inputs/origin-input";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme =>
     inputFields: {
       marginTop: theme.spacing(2),
     },
+    labels: { color: "black", fontWeight: 600, fontSize: 20 },
   })
 );
 
@@ -42,6 +44,7 @@ export default function SearchCard({
   setGetTrips,
   getTrips,
 }: SearchCardProps) {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [origin, setOrigin] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -49,15 +52,25 @@ export default function SearchCard({
   const handleGetTrips = async () => {
     if (origin !== "" && destination !== "" && date !== "" && time != "") {
       setGetTrips(true);
-      const { data } = await axios.get(
-        `https://v5.db.transport.rest/journeys?from=${origin}&to=${destination}&departure=${
-          date + "T" + time
-        }&tickets=true&results=5`
-      );
-      if (data) {
-        const journeys = data.journeys;
+      let response;
+      try {
+        response = await axios.get(
+          `https://v5.db.transport.rest/journeys?from=${origin}&to=${destination}&departure=${
+            date + "T" + time
+          }&tickets=true&results=5`
+        );
+        const journeys = response.data.journeys;
         setTrips(journeys);
         setGetTrips(false);
+      } catch (err: any) {
+        if (err?.response?.data?.error) {
+          const errorMsg = err?.response?.data?.message;
+          enqueueSnackbar(errorMsg ?? "An error occurred. Please try again", {
+            variant: "error",
+          });
+          setGetTrips(false);
+          return;
+        }
       }
     }
   };
@@ -67,62 +80,64 @@ export default function SearchCard({
   return (
     <Card className={classes.searchCard}>
       <CardContent>
-        <Grid container justifyContent="space-evenly">
-          <Grid item xs={6}>
-            <SearchOrigin setOrigin={setOrigin} />
+        <form>
+          <Grid container justifyContent="space-evenly">
+            <Grid item xs={6}>
+              <SearchOrigin setOrigin={setOrigin} />
+            </Grid>
+            <Grid item xs={6}>
+              <SearchDestination setDestination={setDestination} />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <SearchDestination setDestination={setDestination} />
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          justifyContent="space-evenly"
-          className={classes.inputFields}
-        >
-          <Grid item xs={6}>
-            <label
-              htmlFor="date"
-              style={{ color: "black", fontWeight: 600, fontSize: 20 }}
-            >
-              Choose Date
-            </label>
-            <TextField
-              type={"date"}
-              fullWidth
-              variant="outlined"
-              name="date"
-              value={date}
-              onChange={e => setDate(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <label
-              htmlFor="date"
-              style={{ color: "black", fontWeight: 600, fontSize: 20 }}
-            >
-              Choose Time
-            </label>
-            <TextField
-              type={"time"}
-              fullWidth
-              variant="outlined"
-              name="time"
-              value={time}
-              onChange={e => setTime(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="center">
-          <Button
-            variant="contained"
-            onClick={handleGetTrips}
-            className={classes.bookButton}
-            disabled={getTrips}
+          <Grid
+            container
+            justifyContent="space-evenly"
+            className={classes.inputFields}
           >
-            Find trips
-          </Button>
-        </Grid>
+            <Grid item xs={6}>
+              <label htmlFor="date" className={classes.labels}>
+                Choose Date
+              </label>
+              <TextField
+                type={"date"}
+                fullWidth
+                variant="outlined"
+                name="date"
+                value={date}
+                required
+                onChange={e => setDate(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <label htmlFor="date" className={classes.labels}>
+                Choose Time
+              </label>
+              <TextField
+                type={"time"}
+                fullWidth
+                variant="outlined"
+                name="time"
+                value={time}
+                onChange={e => setTime(e.target.value)}
+                required
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            className={classes.bookButton}
+          >
+            <Button
+              variant="contained"
+              onClick={handleGetTrips}
+              disabled={getTrips}
+              type="submit"
+            >
+              Find trips
+            </Button>
+          </Grid>
+        </form>
       </CardContent>
     </Card>
   );

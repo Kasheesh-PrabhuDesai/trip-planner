@@ -73,6 +73,7 @@ export default function SearchDestination({
             {...params}
             variant="outlined"
             name="origin"
+            required
             onChange={ev => {
               if (ev.target.value !== "" || ev.target.value !== null) {
                 onChangeHandle(ev.target.value);

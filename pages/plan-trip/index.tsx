@@ -1,12 +1,5 @@
-import {
-  Grid,
-  Button,
-  makeStyles,
-  createStyles,
-  Typography,
-  CircularProgress,
-} from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { Grid, Typography, CircularProgress } from "@material-ui/core";
+import { useState } from "react";
 import SearchCard from "../../src/components/cards/search-inputs-card";
 import TripDetailsCard from "../../src/components/cards/trip-details-card";
 
