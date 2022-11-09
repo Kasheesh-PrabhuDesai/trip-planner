@@ -23,6 +23,11 @@ export const getTravelDuration = (legs: Array<any>) => {
   const arrivalTime = moment.utc(new Date(legs[legs.length - 1]?.arrival));
   if (arrivalTime.isBefore(departureTime)) departureTime.add(1, "day");
   var d = moment.duration(arrivalTime.diff(departureTime));
+  if (d.get("days") >= 1) {
+    return `${d.get("days")} days, ${d.get("hours")} hours, ${d.get(
+      "minutes"
+    )} minutes`;
+  }
   return `${d.get("hours")} hours, ${d.get("minutes")} minutes`;
 };
 
