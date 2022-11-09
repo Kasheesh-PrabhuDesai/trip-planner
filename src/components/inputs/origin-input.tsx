@@ -23,14 +23,18 @@ export default function SearchOrigin({ setOrigin }: SearchOriginProps) {
   const onChangeHandle = async (value: string) => {
     // use the changed value to make request and then use the result. Which
     if (value !== "") {
-      const response = await axios.get(
-        `https://v5.db.transport.rest/locations?query=${value}&results=5`
-      );
-      const stops = await response.data;
-      const filteredStops = Object.keys(stops).map(key => {
-        return { id: stops[key]["id"], name: stops[key]["name"] };
-      });
-      setOptions(filteredStops);
+      try {
+        const response = await axios.get(
+          `https://v5.db.transport.rest/locations?query=${value}&results=5`
+        );
+        const stops = await response.data;
+        const filteredStops = Object.keys(stops).map(key => {
+          return { id: stops[key]["id"], name: stops[key]["name"] };
+        });
+        setOptions(filteredStops);
+      } catch (err) {
+        return;
+      }
     }
   };
 
