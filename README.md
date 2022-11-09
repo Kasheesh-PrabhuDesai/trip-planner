@@ -1,34 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+THE FOLLOWING REPOSITORY CONTAINS A NEXT JS PROJECT BOOTSTRAPPED USING CREATE-NEXT-APP. THE IDEA BEHIND THE APP IS TO BUILD A SIMPLE AND EASY TO USE TRIP PLANNER. THE APP IS BUILT ON TOP OF THE TRANSPORT REST API FOR DEUTSCHE BAHN. THE USER HAS TO ENTER HIS / HER CHOICE OF ORIGIN , DESTINATION, DATE AND TIME FOR TRAVEL TO SEARCH FOR ALL POSSIBLE CONNECTIONS (ALL MODES) FOR THE CHOSEN DATE AND TINE.
 
-## Getting Started
+TO KEEP THE APP EXTREMELY SIMPLE, I HAVE LIMITED THE NUMBER OF JOUNREY RESULTS TO ONLY BE 5. SIMILARLY FOR THE ORIGIN AND DESTINATION INPUT FIELDS, I HAVE ADDED THE FLEXIBILITY OF AUTOCOMPLETE. WHAT THIS MEANS IS THAT THE USER CAN START SEARCHING FOR A STOP AND THE POSSIBLE STOPS WOULD BE FETCHED REAL TIME FROM THE API AND DISPLAYED AS A DROPDOWN TO THE USER. AGAIN FOR SIMPLICITY PURPOSE THE NUMBER OF RESULTS RETURNED AND DISPLAYED HAS BEEN LIMITED TO BE 5. 
 
-First, run the development server:
+THE CHOICE OF PACKAGES ARE AS SUCH:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1) MATERIAL UI HAS BEEN CHOSEN AS THE FRONTEND CSS FRAMEWORK AS PERSONALLY I LIKE THE DOCUMENTATION AND EASE OF USE OF THE VARIOUS COMPONENTS
+2) NEXT JS HAD BEEN CHOSEN FOR DEVELOPING THE APP FULL STACK. REASON BEING THE AMAZING PAGES FEATURE AND THE SSR FUNCTIONALITY WHICH IS BUILT ON TOP OF THE REACT FRAMEWORK
+3) MOMENT.JS IS USED TO MANIPULATE DATE AND TIME AS IT IS ONE OF THE BEST PACKAGES TO WORK WITH DATE AND TIME.
+4) NOTISTACK HAS BEEN USED TO PROVIDE THE USER WITH FEEDBACK IF ERRORS OCCUR
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+HOW TO RUN THE CODE ?
+1. FIRST CLONE THE PROJECT TO YOUR WORKSPACE USING GIT CLONE git@github.com:Kasheesh-PrabhuDesai/trip-planner.git
+2. RUN YARN DEV TO START THE DEVELOPMENT SERVER 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+TO MAKE TESTING THE APP EVEN SIMPLER I HAVE ALREADY DEPLOYED THE FOLLOWING APP TO VERCEL. THE DEPLOYED APP CAN BE FOUND ON https://trip-planner-bay.vercel.app/
