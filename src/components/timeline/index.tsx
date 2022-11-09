@@ -8,6 +8,8 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import TrainIcon from "@material-ui/icons/Train";
+import AirportShuttleIcon from "@material-ui/icons/AirportShuttle";
+import DirectionsWalkIcon from "@material-ui/icons/DirectionsWalk";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { displayDateTime } from "../../helpers/trip-details-extractor";
@@ -23,11 +25,14 @@ const useStyles = makeStyles(theme => ({
   secondaryTail: {
     backgroundColor: theme.palette.secondary.main,
   },
+  icons: {
+    width: 28,
+    height: 28,
+  },
 }));
 
 export default function TravelTimeline({ legs }: TravelTimelineProps) {
   const classes = useStyles();
-  console.log(legs);
   return (
     <Timeline align="alternate">
       {legs.map((item, index) => (
@@ -48,7 +53,15 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot>
-                <TrainIcon />
+                {item?.line?.mode === "train" && (
+                  <TrainIcon className={classes.icons} />
+                )}
+                {item?.line?.mode === "bus" && (
+                  <AirportShuttleIcon className={classes.icons} />
+                )}
+                {item?.walking && (
+                  <DirectionsWalkIcon className={classes.icons} />
+                )}
               </TimelineDot>
               <TimelineConnector />
             </TimelineSeparator>
@@ -79,7 +92,15 @@ export default function TravelTimeline({ legs }: TravelTimelineProps) {
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot>
-                <TrainIcon />
+                {item?.line?.mode === "train" && (
+                  <TrainIcon className={classes.icons} />
+                )}
+                {item?.line?.mode === "bus" && (
+                  <AirportShuttleIcon className={classes.icons} />
+                )}
+                {item?.walking && (
+                  <DirectionsWalkIcon className={classes.icons} />
+                )}
               </TimelineDot>
               {index !== legs.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
